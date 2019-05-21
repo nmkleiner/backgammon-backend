@@ -21,7 +21,6 @@ function login (userName, password) {
             return playerCollection.findOne({userName})
         })
         .then(user => {
-            console.log('3',user)
             if (password === user.password) return user
             else return {};
     })

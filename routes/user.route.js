@@ -3,9 +3,7 @@ function addRoutes(app) {
 
 
     app.put('/login', (req, res) => {
-        console.log('0',req.body)
         const { userName, password } = req.body
-        console.log('1',userName,password)
         userService.login(userName, password)
             .then(user => {
                 if (user.userName) {
