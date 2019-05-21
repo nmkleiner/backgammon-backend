@@ -22,7 +22,7 @@ app.use(
   })
 );
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static("public"));
 userRoute(app);
 
 io.on("connection", socket => {
