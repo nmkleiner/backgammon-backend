@@ -21,11 +21,11 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nmkleiner/final-proj-backend.git"
+    "url": "git+https://github.com/nmkleiner/backgammon-vue.git"
   },
   "bugs": {
-    "url": "https://github.com/nmkleiner/final-proj-backend/issues"
+    "url": "https://github.com/nmkleiner/backgammon-vue/issues"
   },
-  "homepage": "https://github.com/nmkleiner/final-proj-backend#readme",
+  "homepage": "https://github.com/nmkleiner/backgammon-vue#readme",
   "description": ""
 }
