@@ -1,7 +1,5 @@
 const userService = require('../services/user.service')
 function addRoutes(app) {
-
-
     app.put('/login', (req, res) => {
         const { userName, password } = req.body
         userService.login(userName, password)
@@ -63,9 +61,6 @@ function addRoutes(app) {
     //         playerService.getById(playerId)
     //             .then((player) => res.json(player))
     //     })
-
-
-
 }
 
 module.exports = addRoutes
