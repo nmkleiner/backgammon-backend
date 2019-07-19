@@ -6,7 +6,6 @@ function addRoutes(app) {
             .then(user => {
                 if (user.userName) {
                     req.session.loggedInUser = user
-                    console.log(2,user)
                     return res.json(user)
                 }
                 else res.end()
