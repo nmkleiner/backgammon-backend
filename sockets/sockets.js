@@ -26,6 +26,10 @@ function initSockets(http) {
             io.sockets.in(moveSoldierDto.room)
             .emit('serverSoldierMoved', moveSoldierDto);
         });
+        socket.on('clientSoldierMoveReceived', (moveReceivedDto) => {
+            io.sockets.in(moveReceivedDto.room)
+            .emit('serverSoldierMoveReceived', moveReceivedDto);
+        });
         socket.on('clientEndTurn', room => {
             socket.broadcast.to(room).emit('serverEndTurn');
         });
