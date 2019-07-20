@@ -5,23 +5,16 @@ function initSockets(http) {
     io.on('connection', socket => {
         socket.on('clientGameJoined', room => {
             socket.join(room)
-            socket.broadcast.to(room).emit('serverUserJoined');
+            socket.to(room).emit('serverUserJoined');
         });
         
         
         socket.on('clientAlreadyHere', room => {
-            socket.broadcast.to(room).emit('serverSomeoneAlreadyHere')
+            socket.to(room).emit('serverSomeoneAlreadyHere')
         })
-        socket.on('clientRollDices', room => {
-            socket.broadcast.to(room).emit('serverDicesRolling');
-        });
         
-        socket.on('clientDicesRes', (room, dices) => {
-            socket.broadcast.to(room).emit('serverDicesUnrolling', dices);
-        });
-        socket.on('clientStartDiceRes', (room, dice) => {
-            socket.broadcast.to(room).emit('serverDiceUnrolling', dice);
-        });
+        openDicesSocket(socket)
+        
         socket.on('clientSoldierMoved', (moveSoldierDto) => {
             io.sockets.in(moveSoldierDto.room)
             .emit('serverSoldierMoved', moveSoldierDto);
@@ -31,15 +24,17 @@ function initSockets(http) {
             .emit('serverSoldierMoveReceived', moveReceivedDto);
         });
         socket.on('clientEndTurn', room => {
-            socket.broadcast.to(room).emit('serverEndTurn');
+            socket.to(room).emit('serverEndTurn');
         });
         socket.on('clientEndGame', (endGameDto) => {
-            socket.broadcast.to(endGameDto.room).emit('serverGameEnded', endGameDto);
+            socket.to(endGameDto.room).emit('serverEndGame', endGameDto);
+        });
+        socket.on('clientEndGameDtoReceived', (endGameReceivedDto) => {
+            socket.to(endGameReceivedDto.room).emit('serverEndGameDtoReceived', endGameReceivedDto);
         });
         socket.on('clientRestartGame', room => {
-            socket.broadcast.to(room).emit('serverRestartGame');
+            socket.to(room).emit('serverRestartGame');
         });
-        
         socket.on('chatJoined', room => socket.join(room));
         
         socket.on('assignMsg', ({ msg, room }) => {
@@ -48,5 +43,18 @@ function initSockets(http) {
         
     });
 }
+
+function openDicesSocket(socket) {
+    
+    socket.on('clientThrowDices', (throwDicesDto) => {
+        console.log(throwDicesDto)
+        socket.to(throwDicesDto.room).emit('serverThrowDices',throwDicesDto);
+    });
+
+    socket.on('clientThrowDicesReceived', throwDicesReceivedDto => {
+        socket.to(throwDicesReceivedDto.room).emit('serverThrowDiceReceived',throwDicesReceivedDto);
+    });
+}
+
 
 module.exports = initSockets;
