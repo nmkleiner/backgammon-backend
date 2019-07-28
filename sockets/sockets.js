@@ -47,7 +47,6 @@ function initSockets(http) {
 function openDicesSocket(socket) {
     
     socket.on('clientThrowDices', (throwDicesDto) => {
-        console.log(throwDicesDto)
         socket.to(throwDicesDto.room).emit('serverThrowDices',throwDicesDto);
     });
 
